@@ -6,7 +6,7 @@ A Python tool to scan, inventory and assess enterprise digital certificates for 
 In large enterprises, digital certificates are scattered across hundreds 
 of systems with no centralised visibility. Without a structured inventory, 
 organisations risk undetected expired certificates, weak cryptographic 
-algorithms, and key compromise — all of which can lead to authentication 
+algorithms, and key compromise, all of which can lead to authentication 
 failures, service outages, and security breaches.
 
 This tool automatically scans certificate files enterprise-wide, extracts 
