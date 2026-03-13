@@ -80,7 +80,7 @@ python cert-asset-inventory.py
 
 ## ⚠️ Security Note
 Never commit private keys to this repository. 
-This tool requires certificate (`.pem`) files only - 
+This tool requires certificate (`.pem`) files only, 
 not private key files.
 
 ---
