@@ -1,6 +1,6 @@
 # crypto-asset-inventory
 A Python tool to scan, inventory and assess enterprise digital certificates for cryptographic risk.
-# 🔐 Crypto Asset Inventory — Phase 1: Digital Certificate Inventory
+# 🔐 Crypto Asset Inventory - Phase 1: Digital Certificate Inventory
 
 ## Overview
 In large enterprises, digital certificates are scattered across hundreds 
@@ -80,12 +80,12 @@ python cert-asset-inventory.py
 
 ## ⚠️ Security Note
 Never commit private keys to this repository. 
-This tool requires certificate (`.pem`) files only — 
+This tool requires certificate (`.pem`) files only - 
 not private key files.
 
 ---
 
-## 🗺️ Roadmap — Broader Crypto Asset Inventory
+## 🗺️ Roadmap - Broader Crypto Asset Inventory
 
 This project is Phase 1 of a broader enterprise cryptographic 
 inventory program:
