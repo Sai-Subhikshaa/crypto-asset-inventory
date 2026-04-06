@@ -85,6 +85,53 @@ not private key files.
 
 ---
 
+## 📊 Phase 2 - Crypto Posture Dashboard
+
+### Overview
+A dynamic HTML dashboard that visualises the cryptographic risk posture 
+of the certificate estate. Built on top of Phase 1's inventory output, 
+it translates raw CSV data into actionable security intelligence for 
+security teams and CISOs.
+
+### 🔴 Key Risk Indicators (KRIs)
+- Expired certificates still active in the environment
+- Certificates with weak keys below NIST SP 800-57 thresholds
+
+### 🟢 Key Performance Indicators (KPIs)
+- Total certificates inventoried
+- Percentage of valid certificates
+- Percentage of expired certificates
+- Percentage of weak key certificates
+
+### 📈 Dashboard Components
+| Component | Description |
+|---|---|
+| KRI Alert Panel | Immediate action items with severity tagging |
+| KPI Summary Cards | Estate health at a glance with percentages |
+| Certificate Status Chart | Valid / Expired / Expiring Soon distribution |
+| Key Strength Chart | Strong vs Weak key breakdown |
+| Algorithm Distribution | RSA / ECC / DSA usage across estate |
+| Full Certificate Register | Complete inventory table with colour-coded status |
+
+### 🚀 How To Run
+1. Run Phase 1 script to generate fresh inventory:
+\`\`\`bash
+python phase-1-cert-inventory/cert-asset-inventory.py
+\`\`\`
+2. Run dashboard generator:
+\`\`\`bash
+python phase-2-dashboard/generate_dashboard.py
+\`\`\`
+3. Open the live dashboard:
+\`\`\`
+https://sai-subhikshaa.github.io/crypto-asset-inventory/phase-2-dashboard/dashboard.html
+\`\`\`
+
+### 🔗 Live Dashboard
+👉 [View Live Dashboard](https://sai-subhikshaa.github.io/crypto-asset-inventory/phase-2-dashboard/dashboard.html)
+
+
+
 ## 🗺️ Roadmap - Broader Crypto Asset Inventory
 
 This project is Phase 1 of a broader enterprise cryptographic 
@@ -93,7 +140,7 @@ inventory program:
 | Phase | Scope | Status |
 |---|---|---|
 | Phase 1 | Digital Certificate Inventory | ✅ Complete |
-| Phase 2 | Crypto Posture Dashboard (KPIs/KRIs) | 🔜 In Progress |
+| Phase 2 | Crypto Posture Dashboard (KPIs/KRIs) | ✅ Complete |
 | Phase 3 | Threat & Vulnerability Analysis Report | 🔜 Planned |
 | Phase 4 | Key Stores & HSM Inventory | 🔜 Planned |
 | Phase 5 | Protocol & Library Inventory | 🔜 Planned |
