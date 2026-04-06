@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crypto Posture Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080c10;
+    --bg2: #0d1117;
+    --bg3: #111820;
+    --border: #1e2d3d;
+    --accent: #00d4ff;
+    --accent2: #00ff9f;
+    --danger: #ff3b5c;
+    --warning: #ffaa00;
+    --success: #00ff9f;
+    --text: #c9d4e0;
+    --text-dim: #4a6070;
+    --font-mono: 'Share Tech Mono', monospace;
+    --font-main: 'Rajdhani', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-main);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Scanline overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,212,255,0.015) 2px,
+      rgba(0,212,255,0.015) 4px
+    );
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* Header */
+  header {
+    padding: 28px 40px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(180deg, rgba(0,212,255,0.04) 0%, transparent 100%);
+    position: relative;
+  }
+
+  header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; left: 0;
+    width: 300px; height: 1px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+  }
+
+  .header-left h1 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #fff;
+  }
+
+  .header-left h1 span { color: var(--accent); }
+
+  .header-left p {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    margin-top: 4px;
+  }
+
+  .header-right {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    text-align: right;
+    line-height: 1.8;
+  }
+
+  .header-right .live {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    justify-content: flex-end;
+    color: var(--success);
+    margin-bottom: 4px;
+  }
+
+  .pulse {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--success);
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  /* Main layout */
+  main { padding: 32px 40px; max-width: 1400px; margin: 0 auto; }
+
+  /* Section labels */
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* KRI Alerts */
+  .kri-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .kri-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    animation: fadeIn 0.6s ease both;
+  }
+
+  .kri-card.danger { border-left: 3px solid var(--danger); }
+  .kri-card.warning { border-left: 3px solid var(--warning); }
+
+  .kri-header {
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .kri-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .kri-card.danger .kri-title { color: var(--danger); }
+  .kri-card.warning .kri-title { color: var(--warning); }
+
+  .kri-badge {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 2px;
+    font-weight: 700;
+  }
+
+  .kri-card.danger .kri-badge {
+    background: rgba(255,59,92,0.15);
+    color: var(--danger);
+    border: 1px solid rgba(255,59,92,0.3);
+  }
+
+  .kri-card.warning .kri-badge {
+    background: rgba(255,170,0,0.15);
+    color: var(--warning);
+    border: 1px solid rgba(255,170,0,0.3);
+  }
+
+  .kri-body { padding: 16px 20px; }
+
+  .kri-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    font-size: 14px;
+    animation: slideIn 0.5s ease both;
+  }
+
+  .kri-item:last-child { border-bottom: none; }
+
+  .kri-item-name {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: #fff;
+  }
+
+  .kri-item-detail {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  .kri-item-tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .tag-critical {
+    background: rgba(255,59,92,0.15);
+    color: var(--danger);
+    border: 1px solid rgba(255,59,92,0.3);
+  }
+
+  .tag-high {
+    background: rgba(255,170,0,0.15);
+    color: var(--warning);
+    border: 1px solid rgba(255,170,0,0.3);
+  }
+
+  /* KPI Cards */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .kpi-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px 20px;
+    position: relative;
+    overflow: hidden;
+    animation: fadeIn 0.6s ease both;
+    transition: border-color 0.3s;
+  }
+
+  .kpi-card:hover { border-color: var(--accent); }
+
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+  }
+
+  .kpi-card.total::before { background: var(--accent); }
+  .kpi-card.valid::before { background: var(--success); }
+  .kpi-card.expired::before { background: var(--danger); }
+  .kpi-card.weak::before { background: var(--warning); }
+
+  .kpi-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .kpi-value {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .kpi-card.total .kpi-value { color: var(--accent); }
+  .kpi-card.valid .kpi-value { color: var(--success); }
+  .kpi-card.expired .kpi-value { color: var(--danger); }
+  .kpi-card.weak .kpi-value { color: var(--warning); }
+
+  .kpi-pct {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  .kpi-bar {
+    margin-top: 16px;
+    height: 3px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .kpi-bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 1s ease;
+  }
+
+  .kpi-card.total .kpi-bar-fill { background: var(--accent); }
+  .kpi-card.valid .kpi-bar-fill { background: var(--success); }
+  .kpi-card.expired .kpi-bar-fill { background: var(--danger); }
+  .kpi-card.weak .kpi-bar-fill { background: var(--warning); }
+
+  /* Charts row */
+  .charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .chart-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px;
+    animation: fadeIn 0.8s ease both;
+  }
+
+  .chart-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 24px;
+  }
+
+  /* Donut chart */
+  .donut-wrap {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .donut-svg { flex-shrink: 0; }
+
+  .donut-legend { flex: 1; }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+  }
+
+  .legend-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .legend-label { color: var(--text); flex: 1; }
+  .legend-val {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+
+  /* Bar chart */
+  .bar-chart { display: flex; flex-direction: column; gap: 14px; }
+
+  .bar-row { display: flex; align-items: center; gap: 12px; }
+
+  .bar-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    width: 50px;
+    flex-shrink: 0;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 24px;
+    background: var(--bg3);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    transition: width 1s ease;
+    min-width: 30px;
+  }
+
+  /* Full inventory table */
+  .table-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    animation: fadeIn 1s ease both;
+    margin-bottom: 40px;
+  }
+
+  .table-header {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .table-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .table-count {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  thead tr {
+    background: var(--bg3);
+  }
+
+  th {
+    padding: 12px 20px;
+    text-align: left;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    font-weight: 400;
+    border-bottom: 1px solid var(--border);
+  }
+
+  td {
+    padding: 12px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+
+  tr:last-child td { border-bottom: none; }
+
+  tr:hover td { background: rgba(0,212,255,0.03); }
+
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 10px;
+    border-radius: 2px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+
+  .status-valid {
+    background: rgba(0,255,159,0.1);
+    color: var(--success);
+    border: 1px solid rgba(0,255,159,0.2);
+  }
+
+  .status-expired {
+    background: rgba(255,59,92,0.1);
+    color: var(--danger);
+    border: 1px solid rgba(255,59,92,0.2);
+  }
+
+  .status-expiring {
+    background: rgba(255,170,0,0.1);
+    color: var(--warning);
+    border: 1px solid rgba(255,170,0,0.2);
+  }
+
+  .strength-strong { color: var(--success); }
+  .strength-weak { color: var(--danger); }
+
+  .algo-rsa { color: var(--accent); }
+  .algo-ecc { color: #a78bfa; }
+  .algo-dsa { color: var(--warning); }
+
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-8px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .charts-grid { grid-template-columns: 1fr; }
+    .kri-grid { grid-template-columns: 1fr; }
+    main { padding: 20px; }
+    header { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <h1>CRYPTO <span>POSTURE</span> DASHBOARD</h1>
+    <p> PHASE 2 — CERTIFICATE RISK INTELLIGENCE - ENTERPRISE CRYPTO INVENTORY</p>
+  </div>
+  <div class="header-right">
+    <div class="live"><span class="pulse"></span> LIVE ANALYSIS</div>
+    <div id="timestamp"></div>
+    <div>NIST SP 800-57 COMPLIANT</div>
+  </div>
+</header>
+
+<main>
+
+  <!-- KRI ALERTS -->
+  <div class="section-label">⚠ KEY RISK INDICATORS — IMMEDIATE ACTION REQUIRED</div>
+  <div class="kri-grid" id="kriGrid"></div>
+
+  <!-- KPI CARDS -->
+  <div class="section-label">▸ KEY PERFORMANCE INDICATORS — CERTIFICATE ESTATE HEALTH</div>
+  <div class="kpi-grid" id="kpiGrid"></div>
+
+  <!-- CHARTS -->
+  <div class="section-label">▸ CRYPTOGRAPHIC POSTURE — DISTRIBUTION ANALYSIS</div>
+  <div class="charts-grid">
+    <div class="chart-card">
+      <div class="chart-title">Certificate Status</div>
+      <div class="donut-wrap">
+        <svg class="donut-svg" width="110" height="110" viewBox="0 0 110 110" id="statusDonut"></svg>
+        <div class="donut-legend" id="statusLegend"></div>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Key Strength</div>
+      <div class="donut-wrap">
+        <svg class="donut-svg" width="110" height="110" viewBox="0 0 110 110" id="strengthDonut"></svg>
+        <div class="donut-legend" id="strengthLegend"></div>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Algorithm Distribution</div>
+      <div class="bar-chart" id="algoChart"></div>
+    </div>
+  </div>
+
+  <!-- INVENTORY TABLE -->
+  <div class="section-label">▸ FULL CERTIFICATE INVENTORY</div>
+  <div class="table-card">
+    <div class="table-header">
+      <span class="table-title">Certificate Register</span>
+      <span class="table-count" id="tableCount"></span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Common Name</th>
+          <th>Issuer</th>
+          <th>Expiry Date</th>
+          <th>Key Size</th>
+          <th>Algorithm</th>
+          <th>Status</th>
+          <th>Key Strength</th>
+        </tr>
+      </thead>
+      <tbody id="certTable"></tbody>
+    </table>
+  </div>
+
+</main>
+
+<script>
+// ── Certificate Data (from digital_cert_inventory.csv) ──────────────────────
+/* __CERT_DATA__ */
+// ── Computed Stats ────────────────────────────────────────────────────────────
+const total     = certs.length;
+const valid     = certs.filter(c => c.status === "Valid").length;
+const expired   = certs.filter(c => c.status === "Expired").length;
+const expiring  = certs.filter(c => c.status === "Expiring Soon").length;
+const weak      = certs.filter(c => c.strength === "Weak").length;
+const strong    = certs.filter(c => c.strength === "Strong").length;
+
+const algoCounts = {};
+certs.forEach(c => { algoCounts[c.algo] = (algoCounts[c.algo] || 0) + 1; });
+
+// ── Timestamp ────────────────────────────────────────────────────────────────
+document.getElementById('timestamp').textContent =
+  new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata', 
+  dateStyle: 'medium', timeStyle: 'medium' }) + ' IST';
+
+// ── KRI Alerts ───────────────────────────────────────────────────────────────
+const expiredCerts = certs.filter(c => c.status === "Expired");
+const weakCerts    = certs.filter(c => c.strength === "Weak");
+
+function buildKRI(title, items, cls, tagClass, tagLabel, detailFn) {
+  const card = document.createElement('div');
+  card.className = `kri-card ${cls}`;
+  card.innerHTML = `
+    <div class="kri-header">
+      <span class="kri-title">${title}</span>
+      <span class="kri-badge">${items.length} FOUND</span>
+    </div>
+    <div class="kri-body">
+      ${items.length === 0
+        ? `<div style="color:var(--text-dim);font-family:var(--font-mono);font-size:12px;padding:8px 0">✓ No issues detected</div>`
+        : items.map((c, i) => `
+          <div class="kri-item" style="animation-delay:${i*0.08}s">
+            <div>
+              <div class="kri-item-name">${c.name}</div>
+              <div class="kri-item-detail">${detailFn(c)}</div>
+            </div>
+            <span class="kri-item-tag ${tagClass}">${tagLabel}</span>
+          </div>`).join('')}
+    </div>`;
+  return card;
+}
+
+const kriGrid = document.getElementById('kriGrid');
+kriGrid.appendChild(buildKRI(
+  '🔴 Expired Certificates', expiredCerts, 'danger', 'tag-critical', 'CRITICAL',
+  c => `Expired: ${c.expiry} · ${c.algo}-${c.keySize}`
+));
+kriGrid.appendChild(buildKRI(
+  '🟡 Weak Key Certificates', weakCerts, 'warning', 'tag-high', 'HIGH',
+  c => `Key: ${c.keySize} bits · Below NIST threshold`
+));
+
+// ── KPI Cards ─────────────────────────────────────────────────────────────────
+const kpis = [
+  { label: "Total Certificates", value: total,   pct: "100%",                            cls: "total",   fill: 100 },
+  { label: "Valid Certificates", value: valid,    pct: `${((valid/total)*100).toFixed(0)}% of estate`,   cls: "valid",   fill: (valid/total)*100 },
+  { label: "Expired Certificates",value: expired, pct: `${((expired/total)*100).toFixed(0)}% of estate`, cls: "expired", fill: (expired/total)*100 },
+  { label: "Weak Key Certs",     value: weak,     pct: `${((weak/total)*100).toFixed(0)}% of estate`,    cls: "weak",    fill: (weak/total)*100 },
+];
+
+const kpiGrid = document.getElementById('kpiGrid');
+kpis.forEach((k, i) => {
+  const card = document.createElement('div');
+  card.className = `kpi-card ${k.cls}`;
+  card.style.animationDelay = `${i * 0.1}s`;
+  card.innerHTML = `
+    <div class="kpi-label">${k.label}</div>
+    <div class="kpi-value">${k.value}</div>
+    <div class="kpi-pct">${k.pct}</div>
+    <div class="kpi-bar"><div class="kpi-bar-fill" style="width:${k.fill}%"></div></div>`;
+  kpiGrid.appendChild(card);
+});
+
+// ── Donut Chart Helper ────────────────────────────────────────────────────────
+function drawDonut(svgId, legendId, segments) {
+  const svg = document.getElementById(svgId);
+  const legend = document.getElementById(legendId);
+  const cx = 55, cy = 55, r = 38, stroke = 18;
+  const circumference = 2 * Math.PI * r;
+  let offset = -circumference * 0.25;
+
+  segments.forEach(seg => {
+    const dash = (seg.value / total) * circumference;
+    const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+    circle.setAttribute("cx", cx);
+    circle.setAttribute("cy", cy);
+    circle.setAttribute("r", r);
+    circle.setAttribute("fill", "none");
+    circle.setAttribute("stroke", seg.color);
+    circle.setAttribute("stroke-width", stroke);
+    circle.setAttribute("stroke-dasharray", `${dash} ${circumference - dash}`);
+    circle.setAttribute("stroke-dashoffset", -offset);
+    circle.style.transition = "stroke-dasharray 1s ease";
+    svg.appendChild(circle);
+    offset += dash;
+
+    const item = document.createElement('div');
+    item.className = 'legend-item';
+    item.innerHTML = `
+      <div class="legend-dot" style="background:${seg.color}"></div>
+      <span class="legend-label">${seg.label}</span>
+      <span class="legend-val">${seg.value}</span>`;
+    legend.appendChild(item);
+  });
+
+  // Center text
+  const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  text.setAttribute("x", cx); text.setAttribute("y", cy + 5);
+  text.setAttribute("text-anchor", "middle");
+  text.setAttribute("fill", "#fff");
+  text.setAttribute("font-size", "18");
+  text.setAttribute("font-family", "Rajdhani, sans-serif");
+  text.setAttribute("font-weight", "700");
+  text.textContent = total;
+  svg.appendChild(text);
+}
+
+drawDonut('statusDonut', 'statusLegend', [
+  { label: "Valid",         value: valid,    color: "#00ff9f" },
+  { label: "Expired",       value: expired,  color: "#ff3b5c" },
+  { label: "Expiring Soon", value: expiring, color: "#ffaa00" },
+]);
+
+drawDonut('strengthDonut', 'strengthLegend', [
+  { label: "Strong", value: strong, color: "#00ff9f" },
+  { label: "Weak",   value: weak,   color: "#ff3b5c" },
+]);
+
+// ── Algorithm Bar Chart ───────────────────────────────────────────────────────
+const algoColors = { RSA: "#00d4ff", ECC: "#a78bfa", DSA: "#ffaa00" };
+const algoChart = document.getElementById('algoChart');
+Object.entries(algoCounts).forEach(([algo, count]) => {
+  const pct = (count / total) * 100;
+  const row = document.createElement('div');
+  row.className = 'bar-row';
+  row.innerHTML = `
+    <div class="bar-label">${algo}</div>
+    <div class="bar-track">
+      <div class="bar-fill" style="width:${pct}%;background:${algoColors[algo] || '#888'};color:#000">
+        ${count}
+      </div>
+    </div>`;
+  algoChart.appendChild(row);
+});
+
+// ── Certificate Table ─────────────────────────────────────────────────────────
+document.getElementById('tableCount').textContent = `${total} CERTIFICATES`;
+const tbody = document.getElementById('certTable');
+
+certs.forEach((c, i) => {
+  const tr = document.createElement('tr');
+  tr.style.animationDelay = `${i * 0.03}s`;
+
+  const statusClass = c.status === "Valid" ? "status-valid"
+                    : c.status === "Expired" ? "status-expired"
+                    : "status-expiring";
+  const statusDot = c.status === "Valid" ? "●" : c.status === "Expired" ? "●" : "●";
+  const strengthClass = c.strength === "Strong" ? "strength-strong" : "strength-weak";
+  const algoClass = `algo-${c.algo.toLowerCase()}`;
+
+  tr.innerHTML = `
+    <td style="color:#fff">${c.name}</td>
+    <td>${c.issuer}</td>
+    <td>${c.expiry}</td>
+    <td>${c.keySize}</td>
+    <td class="${algoClass}">${c.algo}</td>
+    <td><span class="status-badge ${statusClass}">${statusDot} ${c.status}</span></td>
+    <td class="${strengthClass}">${c.strength}</td>`;
+  tbody.appendChild(tr);
+});
+</script>
+</body>
+</html>
