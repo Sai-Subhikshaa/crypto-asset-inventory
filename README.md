@@ -115,13 +115,13 @@ security teams and CISOs.
 
 ### 🚀 How To Run
 1. Run Phase 1 script to generate fresh inventory:
-\`\`\`bash
+```bash
 python phase-1-cert-inventory/cert-asset-inventory.py
-\`\`\`
+```
 2. Run dashboard generator:
-\`\`\`bash
+```bash
 python phase-2-dashboard/generate_dashboard.py
-\`\`\`
+```
 3. Open the live dashboard:
 \`\`\`
 https://sai-subhikshaa.github.io/crypto-asset-inventory/phase-2-dashboard/dashboard.html
