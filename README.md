@@ -126,7 +126,35 @@ python phase-2-dashboard/generate_dashboard.py
 ### 🔗 Live Dashboard
 👉 [View Live Dashboard](https://sai-subhikshaa.github.io/crypto-asset-inventory/phase-2-dashboard/dashboard.html)
 
+---
 
+## 📋 Phase 3 - Threat & Vulnerability Analysis Report
+
+### Overview
+A structured security report analysing the cryptographic risk posture of the 
+enterprise certificate estate. Built on findings from Phase 1 inventory and 
+Phase 2 dashboard, translating technical data into governance-ready documentation 
+for security teams and CISOs.
+
+### Report Structure
+| Section | Content |
+|---|---|
+| Executive Summary | Overall risk rating and immediate actions required |
+| Scope & Methodology | Assessment approach and NIST SP 800-57 standards applied |
+| Cryptographic Posture Overview | KPIs showing current certificate estate health |
+| Findings & Risk Analysis | Two findings - Critical and High severity |
+| Remediation Recommendations | Step-by-step remediation with owners and timelines |
+| Risk Register | Consolidated CR-001 and CR-002 tracking table |
+| Appendix | Links to inventory CSV, live dashboard and GitHub repo |
+
+### Key Findings
+| ID | Finding | Risk Rating | Timeline |
+|---|---|---|---|
+| CR-001 | 4 Expired Certificates Active in Environment | 🔴 Critical | 30 days |
+| CR-002 | 2 Weak Key Certificates (RSA-1024) | 🟠 High | 45 days |
+
+### 📄 Report
+👉 [View Full Report](phase-3-threat-report/Crypto_Threat_Vulnerability_Report.pdf)
 
 ## 🗺️ Roadmap - Broader Crypto Asset Inventory
 
@@ -137,7 +165,7 @@ inventory program:
 |---|---|---|
 | Phase 1 | Digital Certificate Inventory | ✅ Complete |
 | Phase 2 | Crypto Posture Dashboard (KPIs/KRIs) | ✅ Complete |
-| Phase 3 | Threat & Vulnerability Analysis Report | 🔜 Planned |
+| Phase 3 | Threat & Vulnerability Analysis Report |  ✅ Complete |
 | Phase 4 | Key Stores & HSM Inventory | 🔜 Planned |
 | Phase 5 | Protocol & Library Inventory | 🔜 Planned |
 
