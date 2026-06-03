@@ -166,8 +166,8 @@ inventory program:
 | Phase 1 | Digital Certificate Inventory | ✅ Complete |
 | Phase 2 | Crypto Posture Dashboard (KPIs/KRIs) | ✅ Complete |
 | Phase 3 | Threat & Vulnerability Analysis Report |  ✅ Complete |
-| Phase 4 | Key Stores & HSM Inventory | 🔜 Planned |
-| Phase 5 | Protocol & Library Inventory | 🔜 Planned |
+| Phase 4 | Crypto Vulnerability Management Process| 🔜 Planned |
+| Phase 5 | Post-Quantum Cryptography Readiness Assessment | 🔜 Planned |
 
 ---
 
