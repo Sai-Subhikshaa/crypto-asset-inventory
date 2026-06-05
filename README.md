@@ -124,7 +124,7 @@ python phase-2-dashboard/generate_dashboard.py
 ```
 
 ### 🔗 Live Dashboard
-👉 [View Live Dashboard](https://sai-subhikshaa.github.io/crypto-asset-inventory/phase-2-dashboard/dashboard.html)
+[View Live Dashboard](https://sai-subhikshaa.github.io/crypto-asset-inventory/phase-2-dashboard/dashboard.html)
 
 ---
 
@@ -154,7 +154,7 @@ for security teams and CISOs.
 | CR-002 | 2 Weak Key Certificates (RSA-1024) | 🟠 High | 45 days |
 
 ### 📄 Report
-👉 [View Full Report](phase-3-threat-report/Crypto_Threat_Vulnerability_Report.pdf)
+[View Full Report](phase-3-threat-report/Crypto_Threat_Vulnerability_Report.pdf)
 
 ---
 
@@ -176,8 +176,8 @@ SLA targets, escalation procedures, RACI matrix and process KPIs.
 | Stage 6 | Closure & Reporting |
 
 ### 📄 Deliverables
-👉 [Process Document](phase-4-vulnerability-management/Crypto_Vulnerability_Management_Process.docx.pdf)
-👉 [Process Flowchart](https://sai-subhikshaa.github.io/crypto-asset-inventory/phase-4-vulnerability-management/crypto_vuln_management_flowchart.html)
+[Process Document](phase-4-vulnerability-management/Crypto_Vulnerability_Management_Process.docx.pdf)
+[Process Flowchart](https://sai-subhikshaa.github.io/crypto-asset-inventory/phase-4-vulnerability-management/crypto_vuln_management_flowchart.html)
 
 ---
 
@@ -199,7 +199,7 @@ crypto agility framework.
 | Overall Risk Rating | 🔴 Critical - immediate planning required |
 
 ### 📄 Report
-👉 [View Full Report](phase-5-pqc-assessment/PQC_Readiness_Assessment.pdf)
+[View Full Report](phase-5-pqc-assessment/PQC_Readiness_Assessment.pdf)
 
 
 ## 🗺️ Enterprise Cryptographic Risk Management Program
