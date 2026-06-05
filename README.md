@@ -136,6 +136,23 @@ enterprise certificate estate. Built on findings from Phase 1 inventory and
 Phase 2 dashboard, translating technical data into governance-ready documentation 
 for security teams and CISOs.
 
+### Report Structure
+| Section | Content |
+|---|---|
+| Executive Summary | Overall risk rating and immediate actions required |
+| Scope & Methodology | Assessment approach and NIST SP 800-57 standards applied |
+| Cryptographic Posture Overview | KPIs showing current certificate estate health |
+| Findings & Risk Analysis | Two findings - Critical and High severity |
+| Remediation Recommendations | Step-by-step remediation with owners and timelines |
+| Risk Register | Consolidated CR-001 and CR-002 tracking table |
+| Appendix | Links to inventory CSV, live dashboard and GitHub repo |
+
+### Key Findings
+| ID | Finding | Risk Rating | Timeline |
+|---|---|---|---|
+| CR-001 | 4 Expired Certificates Active in Environment | 🔴 Critical | 30 days |
+| CR-002 | 2 Weak Key Certificates (RSA-1024) | 🟠 High | 45 days |
+
 ### 📄 Report
 👉 [View Full Report](phase-3-threat-report/Crypto_Threat_Vulnerability_Report.pdf)
 
@@ -183,23 +200,6 @@ crypto agility framework.
 
 ### 📄 Report
 👉 [View Full Report](phase-5-pqc-assessment/PQC_Readiness_Assessment.pdf)
-
-### Report Structure
-| Section | Content |
-|---|---|
-| Executive Summary | Overall risk rating and immediate actions required |
-| Scope & Methodology | Assessment approach and NIST SP 800-57 standards applied |
-| Cryptographic Posture Overview | KPIs showing current certificate estate health |
-| Findings & Risk Analysis | Two findings - Critical and High severity |
-| Remediation Recommendations | Step-by-step remediation with owners and timelines |
-| Risk Register | Consolidated CR-001 and CR-002 tracking table |
-| Appendix | Links to inventory CSV, live dashboard and GitHub repo |
-
-### Key Findings
-| ID | Finding | Risk Rating | Timeline |
-|---|---|---|---|
-| CR-001 | 4 Expired Certificates Active in Environment | 🔴 Critical | 30 days |
-| CR-002 | 2 Weak Key Certificates (RSA-1024) | 🟠 High | 45 days |
 
 
 ## 🗺️ Enterprise Cryptographic Risk Management Program
