@@ -136,6 +136,9 @@ enterprise certificate estate. Built on findings from Phase 1 inventory and
 Phase 2 dashboard, translating technical data into governance-ready documentation 
 for security teams and CISOs.
 
+### 📄 Report
+👉 [View Full Report](phase-3-threat-report/Crypto_Threat_Vulnerability_Report.pdf)
+
 ---
 
 ## 🔄 Phase 4 - Crypto Vulnerability Management Process
@@ -198,8 +201,6 @@ crypto agility framework.
 | CR-001 | 4 Expired Certificates Active in Environment | 🔴 Critical | 30 days |
 | CR-002 | 2 Weak Key Certificates (RSA-1024) | 🟠 High | 45 days |
 
-### 📄 Report
-👉 [View Full Report](phase-3-threat-report/Crypto_Threat_Vulnerability_Report.pdf)
 
 ## 🗺️ Enterprise Cryptographic Risk Management Program
 
