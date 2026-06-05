@@ -176,9 +176,8 @@ SLA targets, escalation procedures, RACI matrix and process KPIs.
 | Stage 6 | Closure & Reporting |
 
 ### 📄 Deliverables
-[Process Document](phase-4-vulnerability-management/Crypto_Vulnerability_Management_Process.docx.pdf)
-[Process Flowchart](https://sai-subhikshaa.github.io/crypto-asset-inventory/phase-4-vulnerability-management/crypto_vuln_management_flowchart.html)
-
+- 📄 [Process Document](phase-4-vulnerability-management/Crypto_Vulnerability_Management_Process.docx.pdf)
+- 🔗 [Process Flowchart](https://sai-subhikshaa.github.io/crypto-asset-inventory/phase-4-vulnerability-management/crypto_vuln_management_flowchart.html)
 ---
 
 ## 🔮 Phase 5 - Post-Quantum Cryptography Readiness Assessment
