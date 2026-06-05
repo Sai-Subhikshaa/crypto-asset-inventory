@@ -1,5 +1,5 @@
-# crypto-asset-inventory
-A Python tool to scan, inventory and assess enterprise digital certificates for cryptographic risk.
+# Enterprise Cryptographic Risk Management Program
+A 5-phase enterprise cryptographic risk management program covering certificate inventory, posture visibility, threat analysis, vulnerability governance and post-quantum readiness.
 # 🔐 Crypto Asset Inventory - Phase 1: Digital Certificate Inventory
 
 ## Overview
@@ -136,6 +136,51 @@ enterprise certificate estate. Built on findings from Phase 1 inventory and
 Phase 2 dashboard, translating technical data into governance-ready documentation 
 for security teams and CISOs.
 
+---
+
+## 🔄 Phase 4 - Crypto Vulnerability Management Process
+
+### Overview
+A formal governance process document defining how cryptographic vulnerabilities 
+are identified, assessed, remediated and closed across the enterprise. Includes 
+SLA targets, escalation procedures, RACI matrix and process KPIs.
+
+### Process Stages
+| Stage | Description |
+|---|---|
+| Stage 1 | Identification & Intake |
+| Stage 2 | Assessment & Prioritisation |
+| Stage 3 | Assignment & Response Planning |
+| Stage 4 | Remediation |
+| Stage 5 | Verification & Testing |
+| Stage 6 | Closure & Reporting |
+
+### 📄 Deliverables
+👉 [Process Document](phase-4-vulnerability-management/Crypto_Vulnerability_Management_Process.docx.pdf)
+👉 [Process Flowchart](https://sai-subhikshaa.github.io/crypto-asset-inventory/phase-4-vulnerability-management/crypto_vuln_management_flowchart.html)
+
+---
+
+## 🔮 Phase 5 - Post-Quantum Cryptography Readiness Assessment
+
+### Overview
+A strategic assessment of the enterprise's readiness for the post-quantum 
+cryptography transition. Covers the quantum threat landscape, current 
+cryptographic exposure, NIST PQC standards, migration roadmap and 
+crypto agility framework.
+
+### Key Findings
+| Finding | Detail |
+|---|---|
+| Quantum Vulnerability | 100% of certificates rely on quantum-vulnerable algorithms |
+| Algorithms at Risk | RSA (11 certs), ECC (4 certs) |
+| Active Threat | Harvest Now, Decrypt Later |
+| Migration Target | ML-KEM (FIPS 203), ML-DSA (FIPS 204), SLH-DSA (FIPS 205) |
+| Overall Risk Rating | 🔴 Critical - immediate planning required |
+
+### 📄 Report
+👉 [View Full Report](phase-5-pqc-assessment/PQC_Readiness_Assessment.pdf)
+
 ### Report Structure
 | Section | Content |
 |---|---|
@@ -156,18 +201,18 @@ for security teams and CISOs.
 ### 📄 Report
 👉 [View Full Report](phase-3-threat-report/Crypto_Threat_Vulnerability_Report.pdf)
 
-## 🗺️ Roadmap - Broader Crypto Asset Inventory
+## 🗺️ Enterprise Cryptographic Risk Management Program
 
-This project is Phase 1 of a broader enterprise cryptographic 
-inventory program:
+A 5-phase program built to demonstrate enterprise-grade cryptographic 
+governance — from asset discovery through to post-quantum readiness.
 
-| Phase | Scope | Status |
+| Phase | Scope | Deliverable |
 |---|---|---|
-| Phase 1 | Digital Certificate Inventory | ✅ Complete |
-| Phase 2 | Crypto Posture Dashboard (KPIs/KRIs) | ✅ Complete |
-| Phase 3 | Threat & Vulnerability Analysis Report |  ✅ Complete |
-| Phase 4 | Crypto Vulnerability Management Process| ✅ Complete |
-| Phase 5 | Post-Quantum Cryptography Readiness Assessment | ✅ Complete |
+| Phase 1 | Digital Certificate Inventory | Python scanning tool + CSV inventory |
+| Phase 2 | Crypto Posture Dashboard | Live HTML dashboard with KPIs/KRIs |
+| Phase 3 | Threat & Vulnerability Analysis | PDF security assessment report |
+| Phase 4 | Vulnerability Management Process | Process document + visual flowchart |
+| Phase 5 | Post-Quantum Cryptography Readiness | PDF readiness assessment + migration roadmap |
 
 ---
 
